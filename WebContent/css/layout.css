@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+
+#title {
+	color : #0087F7;
+}
+
+body {
+	background-color: #ddd;
+}
+
+
+.dropzonex {
+	width: 55%;
+	min-height: 300px;
+	margin: auto;
+    cursor: pointer;
+    border: 2px dashed #0087F7;
+    border-radius: 5px;
+    background: white;
+    padding: 10px 10px;
+}
