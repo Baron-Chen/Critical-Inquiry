@@ -1,5 +1,7 @@
 package servlets;
 
+import static com.mongodb.client.model.Filters.eq;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,23 +11,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.bson.Document;
 
-import com.mongodb.MongoClient;
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 
 import controller.ConnectDB;
 
 /**
- * Servlet implementation class Add_data
+ * Servlet implementation class Add_user
  */
-@WebServlet("/Add_data")
-public class Add_data extends HttpServlet {
+@WebServlet("/Add_user")
+public class Add_user extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Add_data() {
+    public Add_user() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,18 +36,21 @@ public class Add_data extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String json = new String();
 		ConnectDB db = new ConnectDB();
-		try{
-		    MongoCollection<Document> collection = db.getCollection_Commodity();
-		    String name = request.getParameter("name");
-		    Document doc = new Document("name", name);
+		String json = "{\"success\":";
+	    MongoCollection<Document> collection = db.getCollection_User();
+	    String username = request.getParameter("username");
+	    String password = request.getParameter("password");
+	    Document myDoc_name = collection.find(eq("username", username)).first();
+	    if(myDoc_name != null) {
+            json += "false,\"result\":\"User already exists\"";
+	    } else {
+		    Document doc = new Document("username", username)
+		               .append("password", password);
 		    collection.insertOne(doc);
-		    json = "{\"success\": true }";
-		} catch(Exception e){
-		    json = "{\"success\": false }";
-   	        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-   	     }
+            json += "true,\"result\":\"Registered successfully\"";
+	    }
+	    json += "}";
 		response.getWriter().append(json);
 	}
 

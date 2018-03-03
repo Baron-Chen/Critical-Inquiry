@@ -11,12 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.bson.Document;
 
-import java.io.*;
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
-import org.json.*;
+
+import controller.ConnectDB;
+
 import static com.mongodb.client.model.Filters.*;
 
 /**
@@ -60,31 +59,10 @@ public class MyServlet extends HttpServlet {
     }
     
     
-    public String ConnectDatabase() {
-    	
-    String content = new String();
-   	 try{   
-   	       // mongodb server
-   	        MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
-   	       
-   	         // connect to the database
-   	         MongoDatabase mongoDatabase = mongoClient.getDatabase("lists");  
-   	         MongoCollection<Document> collection = mongoDatabase.getCollection("lists");
-   	         Document myDoc = collection.find().first();
-   	         //content = myDoc.toJson();
-   	         content = getContent(collection);
-   	        
-   	      }catch(Exception e){
-   	        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-   	     }
-   	 return content;
-   	 }
-    
-    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String content = ConnectDatabase();
-		JSONObject jsonObject = new JSONObject(content); 
-		String name = jsonObject.getString("name");
+		//String content = ConnectDatabase();
+		//JSONObject jsonObject = new JSONObject(content); 
+		//String name = jsonObject.getString("name");
 		response.setContentType("text/html;charset=UTF-8");
 		// Allocate a output writer to write the response message into the network socket
 		PrintWriter out = response.getWriter();
@@ -101,7 +79,7 @@ public class MyServlet extends HttpServlet {
 		// Echo client's request information
 		out.println("<p>Request URI: " + request.getRequestURI() + "</p>"); out.println("<p>Protocol: " + request.getProtocol() + "</p>"); out.println("<p>PathInfo: " + request.getPathInfo() + "</p>"); out.println("<p>Remote Address: " + request.getRemoteAddr() + "</p>"); // Generate a random number upon each request
 		out.println("<p>A Random Number: <strong>" + Math.random() + "</strong></p>"); out.println("<hr/>");
-		out.println("<p>Content: <strong>" + name + "</strong></p>");
+		//out.println("<p>Content: <strong>" + name + "</strong></p>");
 		out.println("</body>");
 		out.println("</html>");
 		} finally {
@@ -115,7 +93,8 @@ public class MyServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-		String content = ConnectDatabase();
+		ConnectDB db = new ConnectDB();
+		String content = getContent(db.getCollection_Commodity());
 		String json = "{\"success\":";
         if (content != null) {
             json += "true,\"result\":";

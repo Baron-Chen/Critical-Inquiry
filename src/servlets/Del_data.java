@@ -12,6 +12,9 @@ import org.bson.Document;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+
+import controller.ConnectDB;
+
 import static com.mongodb.client.model.Filters.*;
 
 /**
@@ -35,10 +38,9 @@ public class Del_data extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String json = new String();
+		ConnectDB db = new ConnectDB();
 		try{
-			MongoClient mongoClient = new MongoClient( "localhost" , 27017 );// connect to the database
-		    MongoDatabase mongoDatabase = mongoClient.getDatabase("lists");  
-		    MongoCollection<Document> collection = mongoDatabase.getCollection("lists");
+			MongoCollection<Document> collection = db.getCollection_Commodity();
 		    String name = request.getParameter("name");
 		    collection.deleteOne(eq("name", name));
 		    json = "{\"success\": true }";

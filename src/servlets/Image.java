@@ -24,6 +24,8 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import controller.ConnectDB;
+
 
 /**
  * Servlet implementation class Image
@@ -84,9 +86,8 @@ public class Image extends HttpServlet {
                      //System.out.println(newfile.getName());
                      String json = new String();
              		try{
-             			MongoClient mongoClient = new MongoClient( "localhost" , 27017 );// connect to the database
-             		    MongoDatabase mongoDatabase = mongoClient.getDatabase("lists");  
-             		    MongoCollection<Document> collection = mongoDatabase.getCollection("lists");
+             			ConnectDB db = new ConnectDB();
+             			MongoCollection<Document> collection = db.getCollection_Commodity();
              		    String image = "myImages" + "/" + name + "post" + i + prefix;
              		    Document doc = new Document("image", image);
              		    collection.insertOne(doc);

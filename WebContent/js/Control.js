@@ -83,6 +83,52 @@ $(document).ready(function(){
 		});
 	});
 
+
+    //check user function
+    $("#submit").click(function() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        if(username == "" || password == "") {
+            alert("Please fill up the form");
+        } else {          
+            $.ajax({
+                type:"post",
+                url:"Check_user",
+                data:{"username" : username, "password" : password},
+                dataType:"json",
+                success:function(data) {
+                    alert(data.result);
+                },
+                error:function(msg) {
+                    cosole.log(msg);
+                }
+            });
+        }
+    });
+
+    //sign up function
+    $("#signup").click(function() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        if(username == "" || password == "") {
+            alert("Please fill up the form");
+        } else {          
+            $.ajax({
+                type:"post",
+                url:"Add_user",
+                data:{"username" : username, "password" : password},
+                dataType:"json",
+                success:function(data) {
+                    alert(data.result);
+                },
+                error:function(msg) {
+                    cosole.log(msg);
+                }
+            });
+        }
+    });
+
+
     $("#fileUploadContent").initUpload({
         "uploadUrl":"Image",//上传文件信息地址
         //"size":350,//文件大小限制，单位kb,默认不限制
