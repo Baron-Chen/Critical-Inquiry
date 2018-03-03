@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="js/dropzone.js"></script>
+<script type="text/javascript" src="js/fileUpload.js"></script>
 <script type="text/javascript" src="js/Control.js"></script>
-<link rel="stylesheet" type="text/css" href="css/dropzone.css">
 <link rel="stylesheet" type="text/css" href="css/layout.css">
+<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <title>Hello Word!</title>
 </head>
 <body>
@@ -15,22 +15,15 @@
 	Username: <input type="Text" name="username"><br>
 	Gender: <input type="radio" name="gender" value="m">Male
 	<input type="radio" name="gender" value="f">Female<br>
-	Your Age: <select name="study_year">
-		<option value="1">1</option> 
-		<option value="2">2</option> 
-		<option value="3">3</option>
-	</select><br><br>
 	Name:<input type="text" id="name" name="name"><br><br>
-	Database: <select id="databse"></select><br><br>
+	Database: <select id="databse"></select>
+	<div id="image_display"></div><br><br>
 	<button id="click">Load</button>
 	<button id="add">Add</button>
 	<button id="delete">Delete</button>
-	
-	<div class="dropzonex dz-clickable dz-started" id="dropzone">
-  		<div class="needsclick dz-message">
-    			Drop files here or click to upload.<br>
-  		</div>
-  	</div>
+	<br><br>
+	<div id="fileUploadContent" class="fileUploadContent"></div>
+
   	
 </body>
 </html>

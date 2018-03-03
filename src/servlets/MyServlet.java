@@ -70,9 +70,6 @@ public class MyServlet extends HttpServlet {
    	         // connect to the database
    	         MongoDatabase mongoDatabase = mongoClient.getDatabase("lists");  
    	         MongoCollection<Document> collection = mongoDatabase.getCollection("lists");
-   	         //Document doc = new Document("name", "MongoDB");
-   	         //collection.insertOne(doc);
-   	         //collection.deleteOne(eq("name", "MongoDB"));
    	         Document myDoc = collection.find().first();
    	         //content = myDoc.toJson();
    	         content = getContent(collection);

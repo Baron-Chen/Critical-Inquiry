@@ -17,11 +17,20 @@ $(document).ready(function(){
             			$("#databse").empty();
                 		$("#databse").append("<option vlaue='-1'>==Select One==</option>");
                 		for (var i = 0; i < data.result.length; i++) {
+                         if(data.result[i].name != null) {
                             $("#databse").append(
                                     "<option value='" + i
                                             + "'>" + data.result[i].name
                                             + "</option>");
+                            }
                         }
+
+                     $("#image_display").empty();
+                     for (var i = 0; i < data.result.length; i++) {
+                         if(data.result[i].image != null) {
+                               $("#image_display").append("<img  class = 'images' src='" + data.result[i].image + "'>");
+                          }
+                    } 
                  } else {
                     alert(data.msg);//print the error message
                 }
@@ -73,23 +82,31 @@ $(document).ready(function(){
             }
 		});
 	});
-	
-	//drag pictures
-	 $(".dropzonex").dropzone({
-         type:"post",
-         url: "Image",
-         maxFiles: 10,
-         maxFilesize: 2,
-         acceptedFiles: "image/*",
-         addRemoveLinks: true,
-         init: function() {
-             this.on("success", function(file) {
-                 alert("File " + file.name + " uploaded");
-             });
-             this.on("removedfile", function(file) {
-                 alert("File " + file.name + " removed");
-             });
-         }
-     });
+
+    $("#fileUploadContent").initUpload({
+        "uploadUrl":"Image",//上传文件信息地址
+        //"size":350,//文件大小限制，单位kb,默认不限制
+        //"maxFileNumber":3,//文件个数限制，为整数
+        //"filelSavePath":"",//文件上传地址，后台设置的根目录
+        "beforeUpload":beforeUploadFun,//在上传前执行的函数
+        "onUpload":onUploadFun,//在上传后执行的函数
+        //autoCommit:true,//文件是否自动上传
+        "fileType":['bmp','dib','rle','emf','gif','jpg','jpeg','jpe','jif','pcx','dcx','pic','png','tga','tif','tiffxif','wmf','jfif']//文件类型限制，默认不限制，注意写的是文件后缀
+    });
+
+    function beforeUploadFun(opt){
+        opt.otherData =[{"name":"name","value":"zxm"}];
+    };
+
+    function onUploadFun(opt){
+        uploadTools.uploadError(opt);//显示上传错误
+        uploadTools.uploadSuccess(opt);//显示上传成功
+    };
+    
+    
+    function testUpload(){
+        var opt = uploadTools.getOpt("fileUploadContent");
+        uploadEvent.uploadFileEvent(opt);
+    }
 	
 });
