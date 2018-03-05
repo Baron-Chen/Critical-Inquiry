@@ -28,7 +28,8 @@ $(document).ready(function(){
                      $("#image_display").empty();
                      for (var i = 0; i < data.result.length; i++) {
                          if(data.result[i].image != null) {
-                               $("#image_display").append("<img  class = 'images' src='" + data.result[i].image + "'>");
+                               $("#image_display").append("<img  class = 'images' id = '" + data.result[i]._id.$oid 
+                                + "' src='" + data.result[i].image + "'>");
                           }
                     } 
                  } else {
@@ -128,6 +129,11 @@ $(document).ready(function(){
         }
     });
 
+    //Pic click
+    $("body").on("click",".images",function(){
+    	  var id = $(this).attr("id");
+    	  window.location.href="display.html?id=" + id; 
+    	});
 
     $("#fileUploadContent").initUpload({
         "uploadUrl":"Image",//上传文件信息地址
