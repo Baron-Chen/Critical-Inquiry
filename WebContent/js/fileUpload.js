@@ -1,6 +1,3 @@
-/**
- * Created by zxm on 2017/3/10.
- */
 $.fn.extend({
     "initUpload":function(opt) {
         if (typeof opt != "object") {

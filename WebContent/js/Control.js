@@ -1,5 +1,5 @@
 /**
- * 
+ Create by Baron
  */
 
 $(document).ready(function(){
@@ -135,6 +135,17 @@ $(document).ready(function(){
     	  window.location.href="display.html?id=" + id; 
     	});
 
+    //Search
+    $("#search").click(function(){
+		search();
+    });
+    
+    $("#search_box").bind('keydown',function(event){
+    		if (event.keyCode == "13") {
+    			search();
+    		};
+    });
+
     $("#fileUploadContent").initUpload({
         "uploadUrl":"Image",//上传文件信息地址
         //"size":350,//文件大小限制，单位kb,默认不限制
@@ -159,6 +170,11 @@ $(document).ready(function(){
     function testUpload(){
         var opt = uploadTools.getOpt("fileUploadContent");
         uploadEvent.uploadFileEvent(opt);
+    }
+    
+    function search(){
+		var text = $("#search_box").val();
+		window.location.href="search.html?search=" + text;
     }
 	
 });
