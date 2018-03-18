@@ -37,11 +37,10 @@ public class Search_info extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ConnectDB db = new ConnectDB();
 	    String text = request.getParameter("name");
-	    String content = getContent(db.getCollection_Commodity(), text);
+	    String content = getContent(ConnectDB.getCollection_Commodity(), text);
 	    String json = "{\"success\":";
         if (content != "") {
             json += "true,\"result\":";
@@ -65,7 +64,7 @@ public class Search_info extends HttpServlet {
 	}
 	
 	public String getContent(MongoCollection<Document> collection, String text) {
-		String strArray[] = {"name", "city"};
+		String strArray[] = {"name", "brand", "capacity", "manufacturer", "country", "upc", "remarks"};
 		String string = "";
 		int i = 0;
 		for(String str : strArray) {
@@ -84,6 +83,6 @@ public class Search_info extends HttpServlet {
 			}
 		}
 		return string;
-}
+	}
 
 }

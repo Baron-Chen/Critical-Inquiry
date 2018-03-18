@@ -71,12 +71,12 @@ var uploadTools = {
             $("#"+uploadId+" .uploadBts .uploadFileBt i").css("color","#0087F7");
         }
         if(opt.selfUploadBtId!=null&&opt.selfUploadBtId!=""){
-            if(uploadTools.foundExitById(opt.selfUploadBtId)){
+            //if(uploadTools.foundExitById(opt.selfUploadBtId)){
                 $("#"+opt.selfUploadBtId).off();
                 $("#"+opt.selfUploadBtId).on("click",function(){
                     uploadEvent.uploadFileEvent(opt);
                 });
-            }
+            //}
         }
 
     },
@@ -86,7 +86,7 @@ var uploadTools = {
      * @returns {boolean}
      */
     "foundExitById":function(id){
-        return $("#"+id).size()>0;
+        return $("#"+id).length()>0;
     },
     /**
      * 初始化清除文件
@@ -378,12 +378,12 @@ var uploadTools = {
                 formData.append(opt.otherData[j].name,opt.otherData[j].value);
             }
         }
-
-        formData.append("filelSavePath",opt.filelSavePath);
+        if(opt.filelSavePath!=null&&opt.filelSavePath!=""){
+            formData.append("filelSavePath",opt.filelSavePath);
+        }
         if(uploadUrl!="#"&&uploadUrl!=""){
             uploadTools.disableFileUpload(opt);//禁用文件上传
             uploadTools.disableCleanFile(opt);//禁用清除文件
-
             $.ajax({
                 type:"post",
                 url:uploadUrl,

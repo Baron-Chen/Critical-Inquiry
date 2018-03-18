@@ -1,21 +1,83 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="js/display.js"></script>
-<link rel="stylesheet" type="text/css" href="css/display.css">
-
-<title>Hello Word!</title>
+<html >
+  <head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Product Catalog</title>
+<meta name="keywords" content="首页" />
+<meta name="description" content="首页" />
+ <link rel="stylesheet" type="text/css" href="css/display.css"/>
+ <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+ <script type="text/javascript" src="js/imageplugin.js"></script>
+ <script type="text/javascript" src="js/display_control.js"></script>
 </head>
 <body>
-	<h1 id="title"> Details </h1>
+ <div class="showall">
+	                <!--left -->
+	                <div class="showbot">
+                        <div id="showbox">
+                        
+                        </div><!--展示图片盒子-->
+                        <div id="showsum">
+                        	<!--展示图片里边-->
+                        </div>
+                        <p class="showpage">
+                            <a href="javascript:void(0);" id="showlast"> < </a>
+                            <a href="javascript:void(0);" id="shownext"> > </a>
+                        </p>
+                    </div>
+                        <!--conet -->
+                        <div class="tb-property">
+                        	<div class="tr-nobdr">
+                        		<h3>Product Information </h3>
+                        	</div>
+                     <div id="ui-a" class="ui-a">
 
-	<div id="display">
-	<div id="detail_display"></div><br><br>
-	<div id="image_display"></div>
-	</div>
-
-  	
+                    <ul class="address">
+                        <li>
+                            <ul class="address-text">
+                                <li><b>Name of product</b></li>
+                                <li id="name"></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="address-text">
+                                <li><b>Brand </b></li>
+                                <li id="brand"></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="address-text">
+                                <li><b>Capacity/Weight/Volume </b></li>
+                                <li id="capacity"></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="address-text">
+                                <li><b>Manufacturer</b></li>
+                                <li id="manufacturer"></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="address-text">
+                                <li><b>Country of manufacture </b></li>
+                                <li id="country"></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="address-text">
+                                <li><b>Universal Product Code (UPC)  </b></li>
+                                <li id="upc"></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="address-text">
+                                <li><b>Remarks </b></li>
+                                <li id="remarks"></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+    </div>
 </body>
 </html>

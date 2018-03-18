@@ -13,6 +13,11 @@ import org.bson.Document;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Indexes;
+import com.mongodb.client.model.Projections;
+import com.mongodb.client.model.Sorts;
+import com.mongodb.client.model.TextSearchOptions;
 
 import controller.ConnectDB;
 
@@ -58,33 +63,50 @@ public class MyServlet extends HttpServlet {
     		return string;
     }
     
-    
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//String content = ConnectDatabase();
-		//JSONObject jsonObject = new JSONObject(content); 
-		//String name = jsonObject.getString("name");
-		response.setContentType("text/html;charset=UTF-8");
-		// Allocate a output writer to write the response message into the network socket
-		PrintWriter out = response.getWriter();
-		// Write the response message, in an HTML page
+    public String getContent(MongoCollection<Document> collection, String text) {
+		String string = "";
+		int i = 0;
+		collection.createIndex(Indexes.text("$**"));
+		MongoCursor<Document> cursor = collection.find(Filters.text("^.*"+text+".*$", new TextSearchOptions().language("english").caseSensitive(false)))
+				.projection(Projections.metaTextScore("score"))
+		        .sort(Sorts.metaTextScore("score"))
+		        .iterator();
 		try {
-		out.println("<!DOCTYPE html>");
-		out.println("<html><head>");
-		out.println("<meta http-equiv='Content-Type' content='text/html; charset=UTF- 8'>");
-		out.println("<title>Hello, World</title></head>");
-		out.println("<body>");
-		out.println("<h1>Hello, world!</h1>"); // says Hello
-		// Extract Form data
-		out.println("<p>Username: " + request.getParameter("username") + "</p>"); out.println("<p>Gender: " + request.getParameter("gender") + "</p>"); out.println("<p>Year of study : " + request.getParameter("study_year") + "</p>");
-		// Echo client's request information
-		out.println("<p>Request URI: " + request.getRequestURI() + "</p>"); out.println("<p>Protocol: " + request.getProtocol() + "</p>"); out.println("<p>PathInfo: " + request.getPathInfo() + "</p>"); out.println("<p>Remote Address: " + request.getRemoteAddr() + "</p>"); // Generate a random number upon each request
-		out.println("<p>A Random Number: <strong>" + Math.random() + "</strong></p>"); out.println("<hr/>");
-		//out.println("<p>Content: <strong>" + name + "</strong></p>");
-		out.println("</body>");
-		out.println("</html>");
+			    while (cursor.hasNext()) {
+			    	if (i == 0) {
+			    		string += cursor.next().toJson();
+			    	} else {
+			    		string += "," + cursor.next().toJson();
+			    	}
+			     i++;  
+			    }
 		} finally {
-		out.close(); // Always close the output writer
+			    cursor.close();
 		}
+		return string;
+	}
+    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	    String text = request.getParameter("name");
+	    String content = "";
+	    if(text != "" && text != null) {
+		    content = getContent(ConnectDB.getCollection_Commodity(), text);
+	    } else {
+		    content = getContent(ConnectDB.getCollection_Commodity());
+	    }
+	    String json = "{\"success\":";
+        if (content != "") {
+            json += "true,\"result\":";
+            json += "[";
+            json += content;
+            json += "]}";
+        }
+        else {
+        		json += "false}";
+        }
+	    System.out.println(content);
+		response.getWriter().append(json);
 	}
 
 	/**
@@ -92,18 +114,9 @@ public class MyServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
-		ConnectDB db = new ConnectDB();
-		String content = getContent(db.getCollection_Commodity());
-		String json = "{\"success\":";
-        if (content != null) {
-            json += "true,\"result\":";
-            json += "[";
-            json += content;
-            json += "]}";
-        }
-	    System.out.println(json);
-		response.getWriter().append(json);
+		doGet(request, response);
 	}
+	
+	
 
 }

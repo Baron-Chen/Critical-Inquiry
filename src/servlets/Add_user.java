@@ -36,17 +36,17 @@ public class Add_user extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ConnectDB db = new ConnectDB();
 		String json = "{\"success\":";
-	    MongoCollection<Document> collection = db.getCollection_User();
+	    MongoCollection<Document> collection = ConnectDB.getCollection_User();
 	    String username = request.getParameter("username");
 	    String password = request.getParameter("password");
+	    String email = request.getParameter("email");
 	    Document myDoc_name = collection.find(eq("username", username)).first();
 	    if(myDoc_name != null) {
             json += "false,\"result\":\"User already exists\"";
 	    } else {
 		    Document doc = new Document("username", username)
-		               .append("password", password);
+		               .append("password", password).append("email", email);
 		    collection.insertOne(doc);
             json += "true,\"result\":\"Registered successfully\"";
 	    }

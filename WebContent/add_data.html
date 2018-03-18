@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0042)flipin.html -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Data Input</title>
+    <link href="css/index_input.css" rel="stylesheet" type="text/css">
+    <!--Framework-->
+<!--     <script src="js/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script src="js/jquery-ui.js" type="text/javascript"></script> -->
+    <!--End Framework-->
+    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="js/fileUpload.js"></script>
+    <script type="text/javascript" src="js/add_control.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" >
+</head>
+<body>
+<!--     <div class="demos-buttons">
+        <h3>
+            Demos</h3>
+          <a href="index.html" class="submit active">Simple</a><br />
+        <a href="flipin.html" class="submit">Flip In</a> <a href="fromright.html"
+            class="submit">From Right</a>
+        <br>
+        <a href="bouncy.html" class="submit">Bouncy</a> <a href="fadein.html" class="submit">
+            Fade In</a><br>
+        <a href="roatebottom.html" class="submit">Rotate From Bottom</a>
+        <br>
+        <a href="fromtop.html" class="submit">From Top</a><br>
+        <a href="pagelevel01.html" class="submit">Page Level 01</a><br>
+        <a href="pagelevel02.html" class="submit">Page Level 02</a><br>
+        <a href="pagelevel03.html" class="submit">Page Level 03</a>
+    </div> -->
+    <section id="getintouch" >
+        <div class="titler" style="border-bottom: 0;">
+            <h1>
+                <span>Product Data Input Page</span>
+            </h1>
+        </div>
+        <div class="container">
+            <div class="contact" id="form">
+            <div class="row clearfix">
+                <div class="lbl">
+                    <label for="name">
+                        Name of product:</label>
+                </div>
+                <div class="ctrl">
+                    <input type="text" id="name" name="name" placeholder="Ex: Iphone">
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="lbl">
+                    <label for="Brand">
+                        Brand</label>
+                </div>
+                <div class="ctrl">
+                    <input type="text" id="brand" name="brand"  placeholder="Ex: apple">
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="lbl">
+                    <label for="Capacity">
+                        Cpapcity/Weight/Volume</label>
+                </div>
+                <div class="ctrl">
+                    <input type="text" id="capacity" name="capacity" placeholder="Ex: 174g">
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="lbl">
+                    <label for="Manufacturer">
+                        Manufacturer</label>
+                </div>
+                <div class="ctrl">
+                    <input type="text" name="manufacture" id="manufacture" placeholder="Ex: Foxconn">
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="lbl">
+                    <label for="Country">
+                        Country of manufacture</label>
+                </div>
+                <div class="ctrl">
+                    <input type="text" id="country" name="country"  placeholder="Ex: China">
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="lbl">
+                    <label for="Code">
+                        Universal Product Code(UPC)</label>
+                </div>
+                <div class="ctrl">
+                    <input type="text" id="upc" name="upc"  placeholder="Ex: 12345 67890">
+                </div>
+            </div>                                   
+            <div class="row clearfix">
+                <div class="lbl">
+                    <label for="Remarks">
+                        Remarks</label>
+                </div>
+                <div class="ctrl">
+<!--                     <textarea id="message" name="message" rows="6" cols="10"></textarea> -->
+                <textarea id="remarks" name="remarks" rows="3" cols="10" placeholder="This one is very good"></textarea>
+                </div>
+            </div>
+            <div class="row  clearfix">
+                <div class="span10 offset2">
+                    <button id="add_image_sel" class="submit">Submit</button>
+                </div>
+            </div>
+            </div>
+<!--             <div id="success">
+                Your E-Mail has been sent successfully!</div>
+            <div id="error">
+                Unable to send e-mail at the moment, please try later.</div>
+            <div id="validation">
+            </div> -->
+        </div>
+        <div class="container">
+            <div id="fileUploadContent" class="fileUploadContent"></div>
+<!--             <div id="success">
+                Your E-Mail has been sent successfully!</div>
+            <div id="error">
+                Unable to send e-mail at the moment, please try later.</div>
+            <div id="validation">
+            </div> -->
+        </div>
+
+    </section>
+</body>
+</html>

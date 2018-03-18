@@ -8,24 +8,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.BasicDBObject;
 
+import controller.Commodity;
 import controller.ConnectDB;
 
 /**
- * Servlet implementation class Add_data
+ * Servlet implementation class Update_data
  */
-@WebServlet("/Add_data")
-public class Add_data extends HttpServlet {
+@WebServlet("/Update_data")
+public class Update_data extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Add_data() {
+    public Update_data() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,18 +35,13 @@ public class Add_data extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String json = new String();
-		try{
-		    MongoCollection<Document> collection = ConnectDB.getCollection_Commodity();
-		    String name = request.getParameter("name");
-		    Document doc = new Document("name", name);
-		    collection.insertOne(doc);
-		    json = "{\"success\": true }";
-		} catch(Exception e){
-		    json = "{\"success\": false }";
-   	        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-   	     }
-		response.getWriter().append(json);
+		ConnectDB db = new ConnectDB();
+		Commodity commodity = new Commodity();
+	    String id = request.getParameter("id");
+	    String name = request.getParameter("name");
+	    commodity.setName(name);
+	    BasicDBObject queryObject = new BasicDBObject("_id",new ObjectId(id));
+	    db.getCollection_Commodity().updateOne(queryObject, new Document("$set", commodity.getDoc()));
 	}
 
 	/**

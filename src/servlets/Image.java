@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -24,6 +25,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import controller.Commodity;
 import controller.ConnectDB;
 
 
@@ -47,15 +49,58 @@ public class Image extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		Commodity commodity = new Commodity();
 		request.setCharacterEncoding("utf-8");
         String savePath = request.getServletContext().getRealPath("/myImages");
-        Collection<Part> files = request.getParts();
-        for (Part file : files) {
-            String prefix = file.getName().substring(file.getName().lastIndexOf(".")); 
-            SimpleDateFormat time = new SimpleDateFormat("yyyyMMddHHmmss");
-            String name = time.format(new Date());
-            file.write(savePath + "/" + name + "get" + prefix);
+        File mkdir = new File(savePath);
+        if(!mkdir.exists()) {
+        		mkdir.mkdir();
         }
+        HashMap<String, String> map = new HashMap<String, String>();
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        String json = new String();
+        String image = new String();
+        try {
+            List<FileItem> items = upload.parseRequest(new ServletRequestContext(request));
+            int i = 0;
+    			MongoCollection<Document> collection = ConnectDB.getCollection_Commodity();
+            for (FileItem item : items) {
+                if (!item.isFormField()) {
+                     String prefix = item.getName().substring(item.getName().lastIndexOf(".")); 
+                     SimpleDateFormat time = new SimpleDateFormat("yyyyMMddHHmmss");
+                     String datename = time.format(new Date());
+                     File newfile = new File(savePath + "/" + datename + "post" + i + prefix);
+                     item.write(newfile);
+                     //System.out.println(item.getFieldName());
+                     //System.out.println("savePath = " + savePath);
+                     //System.out.println(newfile.getName());
+             		if (i == 0) {
+             			image += "myImages" + "/" + datename + "post" + i + prefix;
+             		} else {
+             			image += ",myImages" + "/" + datename + "post" + i + prefix;
+					}
+             		json = "{\"success\": true }";
+                    i++;
+                } else {
+                		map.put(item.getFieldName(), item.getString("utf-8"));
+                }
+            }
+            commodity.setName(map.get("name"));
+            commodity.setBrand(map.get("brand"));
+            commodity.setCapacity(map.get("capacity"));
+            commodity.setManufacture(map.get("manufacture"));
+            commodity.setCountry(map.get("country"));
+            commodity.setUpc(map.get("upc"));
+            commodity.setRemarks(map.get("remarks"));
+            commodity.setImage(image);
+     		Document doc = commodity.getDoc();
+     		collection.insertOne(doc);
+        } catch (Exception e) {
+ 		    json = "{\"success\": false }";
+	        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+ 		response.getWriter().append(json);
 	}
 
 	/**
@@ -63,47 +108,6 @@ public class Image extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("utf-8");
-        String savePath = request.getServletContext().getRealPath("/myImages");
-        File mkdir = new File(savePath);
-        if(!mkdir.exists()) {
-        		mkdir.mkdir();
-        }
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        ServletFileUpload upload = new ServletFileUpload(factory);
-        try {
-            List<FileItem> items = upload.parseRequest(new ServletRequestContext(request));
-            int i = 0;
-            for (FileItem item : items) {
-                if (!item.isFormField()) {
-                     String prefix = item.getName().substring(item.getName().lastIndexOf(".")); 
-                     SimpleDateFormat time = new SimpleDateFormat("yyyyMMddHHmmss");
-                     String name = time.format(new Date());
-                     File newfile = new File(savePath + "/" + name + "post" + i + prefix);
-                     item.write(newfile);
-                     //System.out.println(item.getFieldName());
-                     //System.out.println("savePath = " + savePath);
-                     //System.out.println(newfile.getName());
-                     String json = new String();
-             		try{
-             			ConnectDB db = new ConnectDB();
-             			MongoCollection<Document> collection = db.getCollection_Commodity();
-             		    String image = "myImages" + "/" + name + "post" + i + prefix;
-             		    Document doc = new Document("image", image);
-             		    collection.insertOne(doc);
-             		    json = "{\"success\": true }";
-             		} catch(Exception e){
-             		    json = "{\"success\": false }";
-                	        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-                	     }
-             		response.getWriter().append(json);
-                    i++;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+		doGet(request, response);
     }
-
 }
