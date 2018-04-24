@@ -1,8 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.bson.Document;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
@@ -47,7 +46,7 @@ public class MyServlet extends HttpServlet {
     public String getContent(MongoCollection<Document> collection) {
     		String string = new String();
     		int i = 0;
-    		MongoCursor<Document> cursor = collection.find().iterator();
+    		MongoCursor<Document> cursor = collection.find().sort(new BasicDBObject("_id",-1)).iterator();
     		try {
     		    while (cursor.hasNext()) {
     		    	if (i == 0) {

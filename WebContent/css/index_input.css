@@ -28,6 +28,12 @@ opacity:1
 opacity:0
 }
 }
+.buttons {
+    width: 100%;
+}
+#delete_button {
+    right: 10%;
+}
 
 .iconfont {
   font-family:"FontAwesome" !important;
@@ -136,8 +142,9 @@ opacity:0
 }
 .fileUploadContent .uploadBts>div .selectFileBt{
     border: none;
+    font-weight: bolder;
     background-color: #AAAAAA;
-    color: #FFFFFF;
+    color: #5F5F5F;
     padding: 10px;
     font-size: 15px;
     border-radius: 5px;
@@ -145,10 +152,10 @@ opacity:0
 }
 .fileUploadContent .uploadBts>div .selectFileBt:hover{
     background-color: #2ecc71;
-}
-.fileUploadContent .uploadBts>div i{
-    font-size: 35px;
     color: #FFFFFF;
+}
+.fileUploadContent .uploadBts>div .selectFileBt>i{
+    font-size: 35px;
     cursor: pointer;
 }
 

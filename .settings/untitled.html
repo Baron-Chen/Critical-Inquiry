@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Document</title>
+    <script type="text/javascript">
+        var genCssSelector = function(){
+
+            // your code here
+            document.querySelector();
+
+        }
+
+         
+
+        document.addEventListener('click', function(e){
+
+            //点击li时，返回：html body #page .content.main .refer ul li
+
+            console.log(genCssSelector(e.target));
+
+        })
+    </script>
+
+</head>
+
+<body>
+
+    <div id="page">
+
+        <div class="content main">
+
+            <div class="refer">
+
+                <ul>
+
+                    <li></li>
+
+                    <li></li>
+
+                    ...
+
+                </ul>
+
+             </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

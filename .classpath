@@ -14,7 +14,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="/Users/baron_chen/JavaEE_Workplace/apache-tomcat-7.0.84/lib/mongo-java-driver-3.6.1.jar"/>
-	<classpathentry kind="lib" path="/Users/baron_chen/JavaEE_Workplace/apache-tomcat-7.0.84/lib/json.jar"/>
+	<classpathentry kind="lib" path="/Users/baron_chen/JavaEE_Workplace/Commodity_Category/WebContent/WEB-INF/lib/json.jar"/>
+	<classpathentry kind="lib" path="/Users/baron_chen/JavaEE_Workplace/Commodity_Category/WebContent/WEB-INF/lib/mongo-java-driver-3.6.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
