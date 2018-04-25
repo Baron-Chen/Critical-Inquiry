@@ -30,16 +30,16 @@ import controller.ConnectDB;
 
 
 /**
- * Servlet implementation class Image
+ * Servlet implementation class Add_Commodity
  */
-@WebServlet("/Image")
-public class Image extends HttpServlet {
+@WebServlet("/Add_Commodity")
+public class Add_Commodity extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Image() {
+    public Add_Commodity() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -75,12 +75,7 @@ public class Image extends HttpServlet {
                      //System.out.println(item.getFieldName());
                      //System.out.println("savePath = " + savePath);
                      //System.out.println(newfile.getName());
-             		if (i == 0) {
-             			image += "myImages" + "/" + datename + "post" + i + prefix;
-             		} else {
-             			image += ",myImages" + "/" + datename + "post" + i + prefix;
-					}
-             		json = "{\"success\": true }";
+             		image += "myImages" + "/" + datename + "post" + i + prefix + ",";
                     i++;
                 } else {
                 		map.put(item.getFieldName(), item.getString("utf-8"));
@@ -96,6 +91,7 @@ public class Image extends HttpServlet {
             commodity.setImage(image);
      		Document doc = commodity.getDoc();
      		collection.insertOne(doc);
+     		json = "{\"success\": true }";
         } catch (Exception e) {
  		    json = "{\"success\": false }";
 	        System.err.println( e.getClass().getName() + ": " + e.getMessage() );

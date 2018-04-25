@@ -30,9 +30,11 @@ opacity:0
 }
 .buttons {
     width: 100%;
+    position: relative;
 }
 #delete_button {
-    right: 10%;
+    right: 0%;
+    position: absolute;
 }
 
 .iconfont {
@@ -41,7 +43,12 @@ opacity:0
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+.icon_font {
+  font-family:"FontAwesome" !important;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 .images{
 	width: 200px;
 	height: auto;
@@ -114,6 +121,16 @@ opacity:0
     text-align: center;
 }
 .fileUploadContent .fileItem .status i{
+    display: block;
+    float: left;
+    padding: 2px 5px;
+    color: red;
+    margin-left: 3px;
+    border-radius: 5px;;
+    font-size: 15px;
+    cursor: pointer;
+}
+.fileUploadContent .fileItem .status span{
     display: block;
     float: left;
     padding: 2px 5px;

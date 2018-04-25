@@ -363,7 +363,7 @@ var uploadTools = {
 
         var formData = new FormData();
         var fileNumber = uploadTools.getFileNumber(opt);
-        if(fileNumber<=0){
+        if(fileNumber<0){
             alert("Please select a file");
             return;
         }

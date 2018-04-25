@@ -1,5 +1,6 @@
 package servlets;
 
+import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -31,18 +34,40 @@ public class Del_data extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
+    private void removeImage(String images, String path) {
+    	String[] image_list = images.split(",");
+    	for (int i = 0; i < image_list.length; i++) {
+    		if(image_list[i] != null && image_list[i] != "") {
+    			try {  
+    			      // Specify the file name and path 
+    			      File file = new File(path + image_list[i]);
+    			      if (file.isFile() && file.exists()) {
+    			    	  file.delete();
+    			      } else {  
+    			        System.out.println("Delete failed.");  
+    			      }  
+    			    } catch (Exception e) {
+    			      System.out.println(e);  
+    			      e.printStackTrace();  
+    			    }  	
+    		}
+    	}
+    }
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String path = request.getServletContext().getRealPath("/");
 		String json = new String();
-		ConnectDB db = new ConnectDB();
 		try{
-			MongoCollection<Document> collection = db.getCollection_Commodity();
-		    String name = request.getParameter("name");
-		    collection.deleteOne(eq("name", name));
+			MongoCollection<Document> collection = ConnectDB.getCollection_Commodity();
+		    String id = request.getParameter("id");
+		    String images = request.getParameter("images");
+		    removeImage(images, path);
+		    BasicDBObject queryObject = new BasicDBObject("_id",new ObjectId(id)); 
+			Document detail = ConnectDB.getCollection_Commodity().find(queryObject).first();
+		    collection.deleteOne(detail);
 		    json = "{\"success\": true }";
 		} catch(Exception e){
 		    json = "{\"success\": false }";

@@ -1,24 +1,74 @@
 $(document).ready(function(){
-    var herf = window.location.href;
-    var id = herf.substr(herf.indexOf('=')+1,herf.length);
-    var name, brand, capacity, manufacture, country, upc, remarks
+    var href = window.location.href;
+    var id;
+    var imgs = "";
+    if(href.indexOf('=') > 0) {
+        id = href.substr(href.indexOf('=')+1, href.length);
+    } else{
+          alert("No Result");
+          window.location.href = "index.html";
+    }
+    var name, brand, capacity, manufacture, country, upc, remarks, image;
     $.ajax({
         type:"post",
-                 url:"Load_info",
-                 data:{"id" : id},
-                 dataType:"json",
-                 success:function(data) {
-                    if(data.success) {
-
-                    }
-                 },
-                 error:function(msg) {
-                     console.log(msg);
+        url:"Load_info",
+        data:{"id" : id},
+        dataType:"json",
+        success:function(data) {
+            if(data.success) {
+                 $("#name").val(data.result[0].name);
+                 $("#brand").val(data.result[0].brand);
+                 $("#capacity").val(data.result[0].capacity);
+                 $("#manufacturer").val(data.result[0].manufacturer);
+                 $("#country").val(data.result[0].country);
+                 $("#upc").val(data.result[0].upc);
+                 $("#remarks").val(data.result[0].remarks);
+                 image = data.result[0].image;
+                 var images = image.split(",");
+                 if (images[0]!=null && images[0]!="") {
+                    control = images.length;
+                     count = 0;
+                     for (var j = 0; j < control; j++) {
+                        if (images[j]!=null && images[j]!="") {
+                        var showTypeStr="<img src='"+images[j]+"'/>"
+                        var img_name = images[j].substr(images[j].indexOf('/')+1, images[j].length);
+                        var modelStr="";
+                        modelStr+="<div class='fileItem'>";
+                        modelStr+="<div class='imgShow'>";
+                        modelStr+=showTypeStr;
+                        modelStr+=" </div>";
+                        modelStr+="<div class='status'>";
+                        modelStr+="<span class='icon_font icon-trash' id='"+images[j]+"'></span>";
+                        modelStr+="</div>";
+                        modelStr+=" <div class='fileName'>";
+                        modelStr+=img_name;
+                        modelStr+="</div>";
+                        modelStr+="</div>";
+                        $(".box").append(modelStr);
+                     }
                  }
+                        $(".icon_font").on("click", function(){
+                            if(confirm("Want to remove this image?")) {
+                                imgs += $(this).attr("id");
+                                imgs += ","
+                                $(this).parents(".fileItem").hide();
+                            }
+                        })
+                }
+            }
+            else {
+            	alert("No Result");
+                window.location.href = "index.html";
+            }
+         },
+         error:function(msg) {
+         	alert("No Result");
+            window.location.href = "index.html";
+         }
     });
 
 	$("#fileUploadContent").initUpload({
-        "uploadUrl":"Image",//上传文件信息地址
+        "uploadUrl":"Update_data",//上传文件信息地址
         //"size":350,//文件大小限制，单位kb,默认不限制
         //"maxFileNumber":3,//文件个数限制，为整数
         //"filelSavePath":"",//文件上传地址，后台设置的根目录
@@ -45,16 +95,36 @@ $(document).ready(function(){
         var upc = $("#upc").val();
         var remarks = $("#remarks").val();
         opt.otherData =[{"name":"name","value":name},
+        {"name":"id","value":id},
         {"name":"brand","value":brand},
         {"name":"capacity","value":capacity},
         {"name":"manufacture","value":manufacture},
         {"name":"country","value":country},
         {"name":"upc","value":upc},
-        {"name":"remarks","value":remarks}];
+        {"name":"remarks","value":remarks},
+        {"name":"image","value":image},
+        {"name":"delete_img","value":imgs}];
     };
 
     function onUploadFun(opt){
-    	alert("Data Added Successfully");
+    	alert("Data Modified Successfully");
         window.location.href="index.html"; 
     };
+
+    $("#delete_button").on("click", function(){
+        if(confirm("Want to delete?")) {
+            $.ajax({
+                type:"post",
+                url:"Del_data",
+                data:{"id" : id, "images" : image},
+                dataType:"json",
+                success:function(data) {
+                    if(data.success) {
+                        alert("Deleted Successfully");
+                        window.location.href="index.html";
+                    }
+                }
+            });
+        }
+    });
 });

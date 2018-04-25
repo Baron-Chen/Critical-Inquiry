@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.bson.Document;
 
@@ -36,6 +37,7 @@ public class Check_user extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	HttpSession session = request.getSession();
 		// TODO Auto-generated method stub
 		String json = "{\"success\":";
 	    MongoCollection<Document> collection = ConnectDB.getCollection_User();
@@ -50,6 +52,7 @@ public class Check_user extends HttpServlet {
 	        query.put("password", password);
 		    Document myDoc_info = collection.find(query).first();
 		    if(myDoc_info != null) {
+		    	session.setAttribute("name", username);
 	            json += "true,\"result\":\"You are logged in\"";
 		    } else {
 	            json += "false,\"type\":1,\"result\":\"Password is incorrect\"";

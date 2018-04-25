@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.bson.Document;
 
@@ -35,6 +36,7 @@ public class Add_user extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		// TODO Auto-generated method stub
 		String json = "{\"success\":";
 	    MongoCollection<Document> collection = ConnectDB.getCollection_User();
@@ -48,6 +50,7 @@ public class Add_user extends HttpServlet {
 		    Document doc = new Document("username", username)
 		               .append("password", password).append("email", email);
 		    collection.insertOne(doc);
+	    	session.setAttribute("name", username);
             json += "true,\"result\":\"Registered successfully\"";
 	    }
 	    json += "}";
