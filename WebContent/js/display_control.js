@@ -65,7 +65,7 @@ $(document).ready(function(){
                             }
                           }
                         } else {
-                          $("#showbox").append("<img src='myImages/no_picture.jpg' width='300' height='300' />");
+                          $("#showbox").append("<img src='image/no_picture.jpg' width='300' height='300' />");
                           $.ljsGlasses.pcGlasses(showproduct);
                         }
                      } else {

@@ -37,7 +37,7 @@ $(document).ready(function(){
                                 + "' src='" + images[0] + "'></a></li>");
                          	} else {
                                 $("#grid").append("<li><a href = 'display.html?id=" + data.result[i]._id.$oid + "'><img id = '" + data.result[i]._id.$oid 
-                                + "' src='myImages/no_picture.jpg'></a></li>");
+                                + "' src='image/no_picture.jpg'></a></li>");
                             }
                           }
                           new AnimOnScroll( document.getElementById( 'grid' ), {

@@ -48,11 +48,9 @@ $(document).ready(function(){
                      }
                  }
                         $(".icon_font").on("click", function(){
-                            if(confirm("Want to remove this image?")) {
-                                imgs += $(this).attr("id");
-                                imgs += ","
-                                $(this).parents(".fileItem").hide();
-                            }
+                            imgs += $(this).attr("id");
+                            imgs += ","
+                            $(this).parents(".fileItem").hide();
                         })
                 }
             }
@@ -90,7 +88,7 @@ $(document).ready(function(){
         }
         var brand = $("#brand").val();
         var capacity = $("#capacity").val();
-        var manufacture = $("#manufacture").val();
+        var manufacture = $("#manufacturer").val();
         var country = $("#country").val();
         var upc = $("#upc").val();
         var remarks = $("#remarks").val();
